@@ -1305,3 +1305,113 @@ ui.run()
 ```
 
 ![image-20231013173506791](images/dialog.jpg)
+
+### 六、外观
+
+#### 1、样式 
+
+NiceGUI 使用 [Quasar Framework](https://quasar.dev/) 版本1.0，因此具有其完整的设计能力。每个 NiceGUI 元素都提供了一个 props 方法，其中的内容会传递给 Quasar 组件 [Introduction - JustPy](https://justpy.io/quasar_tutorial/introduction/#props-of-quasar-components)：请查看 Quasar 文档[Button | Quasar Framework](https://quasar.dev/vue-components/button#design) 以了解所有样式 props。具有前置冒号 : 的 props 可包含在客户端上评估的 JavaScript 表达式。您还可以使用 classes 方法应用 Tailwind CSS 实用类 [Tailwind CSS - Rapidly build modern websites without ever leaving your HTML.](https://tailwindcss.com/)。
+
+如果您真的需要应用 CSS 样式，可以使用 styles 方法。这里的分隔符是 ; 而不是空格。
+
+这三个函数还提供了 remove 和 replace 参数，以防特定样式不符合预定义的外观。
+
+```python
+from nicegui import ui
+
+ui.radio(['x', 'y', 'z'], value='x').props('inline color=green')
+ui.button(icon='touch_app').props('outline round').classes('shadow-lg')
+ui.label('Stylish!').style('color: #6E93D6; font-size: 200%; font-weight: 300')
+
+ui.run()
+```
+
+![image-20231013193947394](images/styling.jpg)
+
+#### 2、尝试样式化 NiceGUI 元素！ 
+
+尝试使用 Tailwind CSS 类[Tailwind CSS - Rapidly build modern websites without ever leaving your HTML.](https://tailwindcss.com/)、Quasar 属性[Introduction - JustPy](https://justpy.io/quasar_tutorial/introduction/#props-of-quasar-components)和 CSS 样式来影响 NiceGUI 元素。
+
+请选择一个可用的元素，然后开始对其进行样式化！
+
+![image-20231013194858351](images/try.jpg)
+
+#### 3、Tailwind CSS 
+
+[Tailwind CSS - Rapidly build modern websites without ever leaving your HTML.](https://tailwindcss.com/) 是一种用于快速构建自定义用户界面的 CSS 框架。NiceGUI 提供了一个流畅的、支持自动完成的界面，用于向 UI 元素添加 Tailwind 类。
+
+您可以通过导航 tailwind 属性的方法来发现可用的类。建造者模式允许您将多个类链接在一起（如 "Label A" 中所示）。您还可以使用一组类来调用 tailwind 属性（如 "Label B" 中所示）。
+
+尽管这与使用 classes 方法非常相似，但对于Tailwind类而言更为方便，因为它支持自动完成。
+
+最后但并非最不重要的是，您还可以预定义一个样式，并将其应用于多个元素（标签 C 和 D）。
+
+```python
+from nicegui import Tailwind, ui
+
+ui.label('Label A').tailwind.font_weight('extrabold').text_color('blue-600').background_color('orange-200')
+ui.label('Label B').tailwind('drop-shadow', 'font-bold', 'text-green-600')
+
+red_style = Tailwind().text_color('red-600').font_weight('bold')
+label_c = ui.label('Label C')
+red_style.apply(label_c)
+ui.label('Label D').tailwind(red_style)
+
+ui.run()
+```
+
+![image-20231013195259577](images/tailwind.jpg)
+
+#### 4、查询选择器 
+
+要操作像文档主体这样的元素，您可以使用 ui.query 函数。通过查询结果，您可以像处理其他 UI 元素一样添加类、样式和属性。这可以用来改变页面的背景颜色，例如：ui.query('body').classes('bg-green')。
+
+```python
+from nicegui import ui
+
+def set_background(color: str) -> None:
+    ui.query('body').style(f'background-color: {color}')
+
+ui.button('Blue', on_click=lambda: set_background('#ddeeff'))
+ui.button('Orange', on_click=lambda: set_background('#ffeedd'))
+
+ui.run()
+```
+
+![image-20231013195510578](images/selector.jpg)
+
+#### 5、颜色主题 
+
+设置 [Quasar Framework](https://quasar.dev/) 使用的主要颜色（主色、次要色、强调色等）。
+
+```python
+from nicegui import ui
+
+ui.button('Default', on_click=lambda: ui.colors())
+ui.button('Gray', on_click=lambda: ui.colors(primary='#555'))
+
+ui.run()
+```
+
+![image-20231013195732479](images/theming.jpg)
+
+#### 6、暗模式 
+
+您可以使用此元素在页面上启用、禁用或切换暗模式。值 None 表示自动模式，使用客户端的系统首选项。
+
+请注意，此元素会覆盖 ui.run 函数和页面装饰器的 dark 参数。
+
+```python
+from nicegui import ui
+
+dark = ui.dark_mode()
+ui.label('Switch mode:')
+ui.button('Dark', on_click=dark.enable)
+ui.button('Light', on_click=dark.disable)
+
+ui.run()
+```
+
+![image-20231013195900486](images/dark.jpg)
+
+
