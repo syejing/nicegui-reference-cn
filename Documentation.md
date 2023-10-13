@@ -16,7 +16,7 @@ ui.label('some label')
 ui.run()
 ```
 
-![image-20231012172127921](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/label.jpg)
+![image-20231012172127921](images/label.jpg)
 
 #### 2、图标
 
@@ -32,7 +32,7 @@ ui.icon('thumb_up', color='primary').classes('text-5xl')
 ui.run()
 ```
 
-![image-20231012172759872](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/icon.jpg)
+![image-20231012172759872](images/icon.jpg)
 
 #### 3、头像
 
@@ -47,7 +47,7 @@ ui.avatar('img:https://nicegui.io/logo_square.png', color='blue-2')
 ui.run()
 ```
 
-![image-20231012183250860](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/avatar.jpg)
+![image-20231012183250860](images/avatar.jpg)
 
 #### 4、链接 
 
@@ -63,7 +63,7 @@ ui.link('NiceGUI on GitHub', 'https://github.com/zauberzeug/nicegui')
 ui.run()
 ```
 
-![image-20231012183451244](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/link.jpg)
+![image-20231012183451244](images/link.jpg)
 
 #### 5、按钮 
 
@@ -79,7 +79,7 @@ ui.button('Click me!', on_click=lambda: ui.notify('You clicked me!'))
 ui.run()
 ```
 
-![image-20231013131549063](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/button.jpg)
+![image-20231013131549063](images/button.jpg)
 
 #### 6、徽章
 
@@ -94,7 +94,7 @@ with ui.button('Click me!', on_click=lambda: badge.set_text(int(badge.text) + 1)
 ui.run()
 ```
 
-![image-20231013131910171](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/badge.jpg)
+![image-20231013131910171](images/badge.jpg)
 
 #### 7、切换 
 
@@ -111,7 +111,7 @@ toggle2 = ui.toggle({1: 'A', 2: 'B', 3: 'C'}).bind_value(toggle1, 'value')
 ui.run()
 ```
 
-![image-20231013132145272](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/toggle.jpg)
+![image-20231013132145272](images/toggle.jpg)
 
 #### 8、单选选择 
 
@@ -128,7 +128,7 @@ radio2 = ui.radio({1: 'A', 2: 'B', 3: 'C'}).props('inline').bind_value(radio1, '
 ui.run()
 ```
 
-![image-20231013132333182](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/radio.jpg)
+![image-20231013132333182](images/radio.jpg)
 
 #### 9、下拉选择 
 
@@ -145,7 +145,7 @@ select2 = ui.select({1: 'One', 2: 'Two', 3: 'Three'}).bind_value(select1, 'value
 ui.run()
 ```
 
-![image-20231013132657001](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/select.jpg)
+![image-20231013132657001](images/select.jpg)
 
 #### 10、复选框 
 
@@ -160,7 +160,7 @@ ui.label('Check!').bind_visibility_from(checkbox, 'value')
 ui.run()
 ```
 
-![image-20231013133005682](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/checkbox.jpg)
+![image-20231013133005682](images/checkbox.jpg)
 
 #### 11、开关 
 
@@ -175,7 +175,7 @@ ui.label('Switch!').bind_visibility_from(switch, 'value')
 ui.run()
 ```
 
-![image-20231013133216057](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/switch.jpg)
+![image-20231013133216057](images/switch.jpg)
 
 #### 12、滑块 
 
@@ -190,7 +190,7 @@ ui.label().bind_text_from(slider, 'value')
 ui.run()
 ```
 
-![image-20231013134411117](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/slider.jpg)
+![image-20231013134411117](images/slider.jpg)
 
 #### 13、操纵杆 
 
@@ -207,7 +207,7 @@ coordinates = ui.label('0, 0')
 ui.run()
 ```
 
-![image-20231013134719597](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/joystick.jpg)
+![image-20231013134719597](images/joystick.jpg)
 
 #### 14、文本输入 
 
@@ -228,7 +228,7 @@ result = ui.label()
 ui.run()
 ```
 
-![image-20231013135137703](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/input.jpg)
+![image-20231013135137703](images/input.jpg)
 
 #### 15、文本框 
 
@@ -246,7 +246,7 @@ result = ui.label()
 ui.run()
 ```
 
-![image-20231013135455220](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/textarea.jpg)
+![image-20231013135455220](images/textarea.jpg)
 
 #### 16、数字输入 
 
@@ -264,7 +264,7 @@ result = ui.label()
 ui.run()
 ```
 
-![image-20231013135657752](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/number.jpg)
+![image-20231013135657752](images/number.jpg)
 
 #### 17、旋钮 
 
@@ -281,7 +281,7 @@ with ui.knob(color='orange', track_color='grey-2').bind_value(knob, 'value'):
 ui.run()
 ```
 
-![image-20231013140049854](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/knob.png)
+![image-20231013140049854](images/knob.png)
 
 #### 18、颜色输入 
 
@@ -297,7 +297,7 @@ ui.color_input(label='Color', value='#000000',
 ui.run()
 ```
 
-![image-20231013140252031](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/color_input.jpg)
+![image-20231013140252031](images/color_input.jpg)
 
 #### 19、颜色选择器 
 
@@ -312,7 +312,7 @@ with ui.button(icon='colorize') as button:
 ui.run()
 ```
 
-![image-20231013140602468](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/color_picker.jpg)
+![image-20231013140602468](images/color_picker.jpg)
 
 #### 20、日期输入 
 
@@ -335,7 +335,7 @@ result = ui.label()
 ui.run()
 ```
 
-![image-20231013140934008](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/date.jpg)
+![image-20231013140934008](images/date.jpg)
 
 #### 21、时间输入 
 
@@ -350,7 +350,7 @@ result = ui.label()
 ui.run()
 ```
 
-![image-20231013141240409](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/time.jpg)
+![image-20231013141240409](images/time.jpg)
 
 #### 22、文件上传 
 
@@ -364,7 +364,7 @@ ui.upload(on_upload=lambda e: ui.notify(f'Uploaded {e.name}')).classes('max-w-fu
 ui.run()
 ```
 
-![image-20231013141458592](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/upload.jpg)
+![image-20231013141458592](images/upload.jpg)
 
 #### 23、聊天消息 
 
@@ -381,7 +381,7 @@ ui.chat_message('Hello NiceGUI!',
 ui.run()
 ```
 
-![image-20231013141749286](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/chat_message.jpg)
+![image-20231013141749286](images/chat_message.jpg)
 
 #### 24、通用元素 
 
@@ -396,7 +396,7 @@ with ui.element('div').classes('p-2 bg-blue-100'):
 ui.run()
 ```
 
-![image-20231013141918903](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/element.jpg)
+![image-20231013141918903](images/element.jpg)
 
 ### 二、标记语言
 
@@ -414,7 +414,7 @@ ui.markdown('''This is **Markdown**.''')
 ui.run()
 ```
 
-![image-20231013143444898](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/markdown.jpg)
+![image-20231013143444898](images/markdown.jpg)
 
 #### 2、Mermaid 图表 
 
@@ -432,7 +432,7 @@ graph LR;
 ui.run()
 ```
 
-![image-20231013144016202](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/mermaind.jpg)
+![image-20231013144016202](images/mermaind.jpg)
 
 #### 3、HTML 元素 
 
@@ -448,7 +448,7 @@ ui.html('This is <strong>HTML</strong>.')
 ui.run()
 ```
 
-![image-20231013144409240](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/html.jpg)
+![image-20231013144409240](images/html.jpg)
 
 #### 4、SVG
 
@@ -469,7 +469,7 @@ ui.html(content)
 ui.run()
 ```
 
-![image-20231013144547008](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/svg.jpg)
+![image-20231013144547008](images/svg.jpg)
 
 ### 三、图片,音频和视频
 
@@ -485,7 +485,7 @@ ui.image('https://picsum.photos/id/377/640/360')
 ui.run()
 ```
 
-![image-20231013151650250](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/image.jpg)
+![image-20231013151650250](images/image.jpg)
 
 #### 2、标题和叠加 
 
@@ -509,9 +509,9 @@ with ui.image('https://cdn.stocksnap.io/img-thumbs/960w/airplane-sky_DYPWDEEILG.
 ui.run()
 ```
 
-![image-20231013152326620](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/captions.jpg)
+![image-20231013152326620](images/captions.jpg)
 
-![image-20231013152410600](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/overlays.jpg)
+![image-20231013152410600](images/overlays.jpg)
 
 #### 3、交互式图像 
 
@@ -532,7 +532,7 @@ ii = ui.interactive_image(src, on_mouse=mouse_handler, events=['mousedown', 'mou
 ui.run()
 ```
 
-![image-20231013152855209](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/interactive_images.jpg)
+![image-20231013152855209](images/interactive_images.jpg)
 
 #### 4、音频 
 
@@ -554,7 +554,7 @@ ui.button(on_click=lambda: a.props(remove='muted'), icon='volume_up').props('out
 ui.run()
 ```
 
-![image-20231013153201942](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/audio.jpg)
+![image-20231013153201942](images/audio.jpg)
 
 #### 5、视频 
 
@@ -573,7 +573,7 @@ v.on('ended', lambda _: ui.notify('Video playback completed'))
 ui.run()
 ```
 
-![image-20231013153543270](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/video.jpg)
+![image-20231013153543270](images/video.jpg)
 
 ### 四、数据元素
 
@@ -600,7 +600,7 @@ ui.table(columns=columns, rows=rows, row_key='name')
 ui.run()
 ```
 
-![image-20231013154040185](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/table.jpg)
+![image-20231013154040185](images/table.jpg)
 
 #### 2、AG Grid (大数据)
 
@@ -637,7 +637,7 @@ ui.button('Show parent', on_click=lambda: grid.call_column_api_method('setColumn
 ui.run()
 ```
 
-![image-20231013154224246](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/aggrid.jpg)
+![image-20231013154224246](images/aggrid.jpg)
 
 #### 3、图表 
 
@@ -668,7 +668,7 @@ ui.button('Update', on_click=update)
 ui.run()
 ```
 
-![image-20231013154452015](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/highchart.jpg)
+![image-20231013154452015](images/highchart.jpg)
 
 #### 4、Apache EChart 
 
@@ -697,7 +697,7 @@ ui.button('Update', on_click=update)
 ui.run()
 ```
 
-![image-20231013154930374](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/echart.jpg)
+![image-20231013154930374](images/echart.jpg)
 
 #### 5、Pyplot 上下文 
 
@@ -716,7 +716,7 @@ with ui.pyplot(figsize=(3, 2)):
 ui.run()
 ```
 
-![image-20231013155154943](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/pyplot.jpg)
+![image-20231013155154943](images/pyplot.jpg)
 
 #### 6、线性图 
 
@@ -743,7 +743,7 @@ line_checkbox = ui.checkbox('active').bind_value(line_updates, 'active')
 ui.run()
 ```
 
-![image-20231013155759385](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/line_plot.jpg)
+![image-20231013155759385](images/line_plot.jpg)
 
 #### 7、Plotly 元素 
 
@@ -765,7 +765,7 @@ ui.plotly(fig).classes('w-full h-40')
 ui.run()
 ```
 
-![image-20231013160303894](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/plotly.jpg)
+![image-20231013160303894](images/plotly.jpg)
 
 #### 8、线性进度条 
 
@@ -780,7 +780,7 @@ ui.linear_progress().bind_value_from(slider, 'value')
 ui.run()
 ```
 
-![image-20231013160538900](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/linear_progress.jpg)
+![image-20231013160538900](images/linear_progress.jpg)
 
 #### 9、圆形进度条 
 
@@ -795,7 +795,7 @@ ui.circular_progress().bind_value_from(slider, 'value')
 ui.run()
 ```
 
-![image-20231013160856298](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/circular_progress.jpg)
+![image-20231013160856298](images/circular_progress.jpg)
 
 #### 10、旋转器 
 
@@ -812,7 +812,7 @@ with ui.row():
 ui.run()
 ```
 
-![image-20231013161027396](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/spinner.jpg)
+![image-20231013161027396](images/spinner.jpg)
 
 #### 11、3D 场景 
 
@@ -847,7 +847,7 @@ with ui.scene().classes('w-full h-64') as scene:
 ui.run()
 ```
 
-![image-20231013161636705](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/scene.jpg)
+![image-20231013161636705](images/scene.jpg)
 
 #### 12、树状结构 
 
@@ -868,7 +868,7 @@ ui.tree([
 ui.run()
 ```
 
-![image-20231013161929099](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/tree.jpg)
+![image-20231013161929099](images/tree.jpg)
 
 #### 13、日志视图 
 
@@ -884,7 +884,7 @@ ui.button('Log time', on_click=lambda: log.push(datetime.now().strftime('%X.%f')
 ui.run()
 ```
 
-![image-20231013162127085](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/log.jpg)
+![image-20231013162127085](images/log.jpg)
 
 #### 14、编辑器 
 
@@ -900,7 +900,7 @@ ui.markdown().bind_content_from(editor, 'value',
 ui.run()
 ```
 
-![image-20231013162355336](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/editor.jpg)
+![image-20231013162355336](images/editor.jpg)
 
 #### 15、代码 
 
@@ -920,7 +920,7 @@ ui.code('''
 ui.run()
 ```
 
-![image-20231013162634963](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/code.jpg)
+![image-20231013162634963](images/code.jpg)
 
 #### 16、JSON编辑器 
 
@@ -949,7 +949,7 @@ ui.json_editor({'content': {'json': json}},
 ui.run()
 ```
 
-![image-20231013162920794](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/json_editor.jpg)
+![image-20231013162920794](images/json_editor.jpg)
 
 ### 五、布局
 
@@ -970,7 +970,7 @@ with ui.card().tight():
 ui.run()
 ```
 
-![image-20231013163357101](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/card.jpg)
+![image-20231013163357101](images/card.jpg)
 
 #### 2、列元素 
 
@@ -987,7 +987,7 @@ with ui.column():
 ui.run()
 ```
 
-![image-20231013164408191](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/col.jpg)
+![image-20231013164408191](images/col.jpg)
 
 #### 3、行元素 
 
@@ -1004,7 +1004,7 @@ with ui.row():
 ui.run()
 ```
 
-![image-20231013164543522](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/row.jpg)
+![image-20231013164543522](images/row.jpg)
 
 #### 4、网格元素 
 
@@ -1026,7 +1026,7 @@ with ui.grid(columns=2):
 ui.run()
 ```
 
-![image-20231013165142064](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/grid.jpg)
+![image-20231013165142064](images/grid.jpg)
 
 #### 5、清除容器内容 
 
@@ -1057,7 +1057,7 @@ ui.button('Clear', on_click=container.clear)
 ui.run()
 ```
 
-![image-20231013165618104](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/remove.jpg)
+![image-20231013165618104](images/remove.jpg)
 
 #### 6、展开元素 
 
@@ -1072,7 +1072,7 @@ with ui.expansion('Expand!', icon='work').classes('w-full'):
 ui.run()
 ```
 
-![image-20231013165939041](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/expansion.jpg)
+![image-20231013165939041](images/expansion.jpg)
 
 #### 7、滚动区域 
 
@@ -1091,7 +1091,7 @@ with ui.row():
 ui.run()
 ```
 
-![image-20231013170148885](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/scroll_area.jpg)
+![image-20231013170148885](images/scroll_area.jpg)
 
 #### 8、分隔符 
 
@@ -1109,7 +1109,7 @@ ui.label('text below')
 ui.run()
 ```
 
-![image-20231013170331247](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/separator.jpg)
+![image-20231013170331247](images/separator.jpg)
 
 #### 9、分割器 
 
@@ -1131,7 +1131,7 @@ with ui.splitter() as splitter:
 ui.run()
 ```
 
-![image-20231013170609845](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/splitter.jpg)
+![image-20231013170609845](images/splitter.jpg)
 
 #### 10、标签页 
 
@@ -1154,7 +1154,7 @@ with ui.tab_panels(tabs, value=two).classes('w-full'):
 ui.run()
 ```
 
-![image-20231013171028031](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/tabs.jpg)
+![image-20231013171028031](images/tabs.jpg)
 
 #### 11、步进器 
 
@@ -1184,7 +1184,7 @@ with ui.stepper().props('vertical').classes('w-full') as stepper:
 ui.run()
 ```
 
-![image-20231013171233030](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/stepper.jpg)
+![image-20231013171233030](images/stepper.jpg)
 
 #### 12、时间线 
 
@@ -1209,7 +1209,7 @@ with ui.timeline(side='right'):
 ui.run()
 ```
 
-![image-20231013171512493](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/timeline.jpg)
+![image-20231013171512493](images/timeline.jpg)
 
 #### 13、走马灯 
 
@@ -1229,7 +1229,7 @@ with ui.carousel(animated=True, arrows=True, navigation=True).props('height=180p
 ui.run()
 ```
 
-![image-20231013171703727](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/carousel.jpg)
+![image-20231013171703727](images/carousel.jpg)
 
 #### 14、菜单 
 
@@ -1252,7 +1252,7 @@ with ui.row().classes('w-full items-center'):
 ui.run()
 ```
 
-![image-20231013172036803](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/menu.jpg)
+![image-20231013172036803](images/menu.jpg)
 
 #### 15、工具提示 
 
@@ -1270,7 +1270,7 @@ with ui.button(icon='thumb_up'):
 ui.run()
 ```
 
-![image-20231013172632233](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/tooltips.jpg)
+![image-20231013172632233](images/tooltips.jpg)
 
 #### 16、通知 
 
@@ -1286,7 +1286,7 @@ ui.button('Say hi!', on_click=lambda: ui.notify('Hi!', close_button='OK'))
 ui.run()
 ```
 
-![image-20231013173254761](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/notify.jpg)
+![image-20231013173254761](images/notify.jpg)
 
 #### 17、对话框 
 
@@ -1304,4 +1304,4 @@ ui.button('Open a dialog', on_click=dialog.open)
 ui.run()
 ```
 
-![image-20231013173506791](/Users/admin/Documents/Workspace/GitHub/nicegui-reference-cn/images/dialog.jpg)
+![image-20231013173506791](images/dialog.jpg)
