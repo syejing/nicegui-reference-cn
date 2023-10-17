@@ -1415,3 +1415,391 @@ ui.run()
 ![image-20231013195900486](images/dark.jpg)
 
 
+### 七、操作
+
+#### 1、计时器 
+
+创建NiceGUI的一个主要动机是需要一个简单的方法来定期更新界面，例如显示收到的测量数据的图表。计时器会以给定的时间间隔重复执行回调函数。
+
+```python
+from datetime import datetime
+from nicegui import ui
+
+label = ui.label()
+ui.timer(1.0, lambda: label.set_text(f'{datetime.now():%X}'))
+
+ui.run()
+```
+
+![image-20231017141718592](images/timer.jpg)
+
+#### 2、键盘 
+
+添加全局键盘事件跟踪。
+
+```python
+from nicegui import ui
+from nicegui.events import KeyEventArguments
+
+def handle_key(e: KeyEventArguments):
+    if e.key == 'f' and not e.action.repeat:
+        if e.action.keyup:
+            ui.notify('f was just released')
+        elif e.action.keydown:
+            ui.notify('f was just pressed')
+    if e.modifiers.shift and e.action.keydown:
+        if e.key.arrow_left:
+            ui.notify('going left')
+        elif e.key.arrow_right:
+            ui.notify('going right')
+        elif e.key.arrow_up:
+            ui.notify('going up')
+        elif e.key.arrow_down:
+            ui.notify('going down')
+
+keyboard = ui.keyboard(on_key=handle_key)
+ui.label('Key events can be caught globally by using the keyboard element.')
+ui.checkbox('Track key events').bind_value_to(keyboard, 'active')
+
+ui.run()
+```
+
+![image-20231017142030641](images/key.jpg)
+
+#### 3、绑定 
+
+NiceGUI 可以直接将 UI 元素绑定到模型。绑定可以用于 UI 元素属性，如文本、值或可见性，以及(嵌套)类属性的模型属性。每个元素都提供了类似 bind_value 和 bind_visibility 的方法，用于创建与相应属性的双向绑定。要定义单向绑定，使用这些方法的 _from 和 _to 变体。只需将模型的属性作为参数传递给这些方法，即可创建绑定。
+
+```python
+from nicegui import ui
+
+class Demo:
+    def __init__(self):
+        self.number = 1
+
+demo = Demo()
+v = ui.checkbox('visible', value=True)
+with ui.column().bind_visibility_from(v, 'value'):
+    ui.slider(min=1, max=3).bind_value(demo, 'number')
+    ui.toggle({1: 'A', 2: 'B', 3: 'C'}).bind_value(demo, 'number')
+    ui.number().bind_value(demo, 'number')
+
+ui.run()
+```
+
+![image-20231017144525883](images/bind.jpg)
+
+#### 4、UI 更新 
+
+NiceGUI 会尝试自动将 UI 元素的状态与客户端同步，例如当标签文本、输入值或元素的样式/类/属性发生变化时。在其他情况下，您可以显式地调用 element.update() 或 ui.update(*elements) 来进行更新。演示代码展示了在 ui.chart 上使用这两种方法，因为在 options 字典中难以自动检测到更改。
+
+```python
+from nicegui import ui
+from random import randint
+
+chart = ui.chart({'title': False, 'series': [{'data': [1, 2]}]}).classes('w-full h-64')
+
+def add():
+    chart.options['series'][0]['data'].append(randint(0, 100))
+    chart.update()
+
+def clear():
+    chart.options['series'][0]['data'].clear()
+    ui.update(chart)
+
+with ui.row():
+    ui.button('Add', on_click=add)
+    ui.button('Clear', on_click=clear)
+
+ui.run()
+```
+
+![image-20231017144858095](images/update.jpg)
+
+#### 5、可刷新的 UI 函数 
+
+@ui.refreshable 装饰器允许您创建具有 refresh 方法的函数。此方法将自动删除函数创建的所有元素，然后重新创建它们。
+
+```python
+import random
+from nicegui import ui
+
+numbers = []
+
+@ui.refreshable
+def number_ui() -> None:
+    ui.label(', '.join(str(n) for n in sorted(numbers)))
+
+def add_number() -> None:
+    numbers.append(random.randint(0, 100))
+    number_ui.refresh()
+
+number_ui()
+ui.button('Add random number', on_click=add_number)
+
+ui.run()
+```
+
+![image-20231017145457457](images/refresh.jpg)
+
+#### 6、异步事件处理程序 
+
+大多数元素还支持异步事件处理程序。
+
+注意：您还可以将 functools.partial 传递给 on_click 属性，以包装带有参数的异步函数。
+
+```python
+import asyncio
+from nicegui import ui
+
+async def async_task():
+    ui.notify('Asynchronous task started')
+    await asyncio.sleep(5)
+    ui.notify('Asynchronous task finished')
+
+ui.button('start async task', on_click=async_task)
+
+ui.run()
+```
+
+![image-20231017145850828](images/async.jpg)
+
+#### 7、运行 CPU 密集型任务 
+
+NiceGUI 提供了一个 cpu_bound 函数，用于在单独的进程中运行 CPU 密集型任务。这对于长时间运行的计算很有用，否则这些计算会阻塞事件循环，导致 UI 无响应。该函数返回一个可以等待的 future。
+
+```python
+import time
+from nicegui import run, ui
+
+def compute_sum(a: float, b: float) -> float:
+    time.sleep(1)  # simulate a long-running computation
+    return a + b
+
+async def handle_click():
+    result = await run.cpu_bound(compute_sum, 1, 2)
+    ui.notify(f'Sum is {result}')
+
+ui.button('Compute', on_click=handle_click)
+
+ui.run()
+```
+
+![image-20231017150128231](images/cpu.jpg)
+
+#### 8、运行 I/O 密集型任务 
+
+NiceGUI 提供了一个 io_bound 函数，用于在单独的线程中运行 I/O 密集型任务。这对于长时间运行的 I/O 操作非常有用，否则这些操作会阻塞事件循环，导致 UI 无响应。该函数返回一个可以等待的 future。
+
+```python
+import requests
+from nicegui import run, ui
+
+async def handle_click():
+    URL = 'https://httpbin.org/delay/1'
+    response = await run.io_bound(requests.get, URL, timeout=3)
+    ui.notify(f'Downloaded {len(response.content)} bytes')
+
+ui.button('Download', on_click=handle_click)
+
+ui.run()
+```
+
+![image-20231017150242359](images/io.jpg)
+
+### 八、页面
+
+#### 1、页面
+
+此装饰器将一个函数标记为页面构建器。访问给定路由的每个用户都将看到页面的新实例。这意味着它对用户是私有的，不与其他用户共享（与在页面装饰器之外放置元素时的行为不同）。
+
+```python
+from nicegui import ui
+
+@ui.page('/other_page')
+def other_page():
+    ui.label('Welcome to the other side')
+    ui.link('Back to main page', '/documentation#page')
+
+@ui.page('/dark_page', dark=True)
+def dark_page():
+    ui.label('Welcome to the dark side')
+    ui.link('Back to main page', '/documentation#page')
+
+ui.link('Visit other page', other_page)
+ui.link('Visit dark page', dark_page)
+
+ui.run()
+```
+
+![image-20231017151208161](images/page.jpg)
+
+#### 2、自动索引页面 
+
+使用 @ui.page 装饰器创建的页面是“私有”的。它们的内容会为每个客户端重新创建。因此，在右侧的演示中，当浏览器重新加载页面时，私有页面上显示的 ID 会发生变化。
+
+未包含在装饰的页面函数中的 UI 元素将放置在位于路由 "/" 下的自动生成的自动索引页面上。这个自动索引页面在启动时创建一次，并在可能连接的所有客户端之间共享。因此，每个连接的客户端都将看到相同的元素。在右侧的演示中，当浏览器重新加载页面时，自动索引页面上显示的 ID 保持不变。
+
+```python
+from nicegui import ui
+from uuid import uuid4
+
+@ui.page('/private_page')
+async def private_page():
+    ui.label(f'private page with ID {uuid4()}')
+
+ui.label(f'shared auto-index page with ID {uuid4()}')
+ui.link('private page', private_page)
+
+ui.run()
+```
+
+![image-20231017151623398](images/autoindex.jpg)
+
+#### 3、页面布局 
+
+使用 ui.header、ui.footer、ui.left_drawer 和 ui.right_drawer，您可以向页面添加额外的布局元素。fixed 参数控制元素是否应滚动或固定在屏幕上。top_corner 和 bottom_corner 参数指示抽屉是否应展开到页面的顶部或底部。有关可能的 props 的更多信息，请参阅 https://quasar.dev/layout/header-and-footer 和 https://quasar.dev/layout/drawer。使用 ui.page_sticky，您可以将元素“粘”在屏幕上。有关更多信息，请参阅 https://quasar.dev/layout/page-sticky。
+
+```python
+from nicegui import ui
+
+@ui.page('/page_layout')
+def page_layout():
+    ui.label('CONTENT')
+    [ui.label(f'Line {i}') for i in range(100)]
+    with ui.header(elevated=True).style('background-color: #3874c8').classes('items-center justify-between'):
+        ui.label('HEADER')
+        ui.button(on_click=lambda: right_drawer.toggle(), icon='menu').props('flat color=white')
+    with ui.left_drawer(top_corner=True, bottom_corner=True).style('background-color: #d7e3f4'):
+        ui.label('LEFT DRAWER')
+    with ui.right_drawer(fixed=False).style('background-color: #ebf1fa').props('bordered') as right_drawer:
+        ui.label('RIGHT DRAWER')
+    with ui.footer().style('background-color: #3874c8'):
+        ui.label('FOOTER')
+
+ui.link('show page with fancy layout', page_layout)
+
+ui.run()
+```
+
+![image-20231017152146477](images/layout01.jpg)
+
+![image-20231017152314605](images/layout02.jpg)
+
+#### 4、打开 
+
+可以用于以编程方式触发特定客户端的重定向。
+
+当使用 new_tab 参数时，浏览器可能会阻止新标签页。这是浏览器的设置，不能由应用程序更改。您可能希望改为使用 ui.link 及其 new_tab 参数。
+
+注意：当使用自动生成的自动索引页面（例如没有 @page 装饰器）时，连接到页面的所有客户端（即浏览器）都将打开目标 URL，除非指定了 socket。用户事件（例如按钮点击）提供了这样的 socket。
+
+```python
+from nicegui import ui
+
+@ui.page('/yet_another_page')
+def yet_another_page():
+    ui.label('Welcome to yet another page')
+    ui.button('RETURN', on_click=lambda: ui.open('documentation#open'))
+
+ui.button('REDIRECT', on_click=lambda: ui.open(yet_another_page))
+
+ui.run()
+```
+
+![image-20231017153005241](images/open.jpg)
+
+#### 5、下载 
+
+用于触发文件下载的函数。
+
+```python
+from nicegui import ui
+
+ui.button('NiceGUI Logo', on_click=lambda: ui.download('https://nicegui.io/logo.png'))
+
+ui.run()
+```
+
+![image-20231017153115976](images/download.jpg)
+
+#### 6、存储 
+
+NiceGUI 提供了一个简单的方法来在应用程序内进行数据持久化。它具有三种内置的存储类型：
+
+- app.storage.user： 
+
+存储在服务器端，每个字典都与保存在浏览器会话 cookie 中的唯一标识符关联。对于每个用户都是唯一的，可以在其所有浏览器选项卡中访问此存储。app.storage.browser['id'] 用于识别用户。
+
+- app.storage.general： 
+
+也存储在服务器端，此字典提供了一个供所有用户访问的共享存储空间。
+
+- app.storage.browser：
+
+与前两种不同，此字典直接存储在浏览器会话 cookie 中，供同一用户的所有浏览器选项卡共享。但是，通常更倾向于使用 app.storage.user，因为它具有减少数据负载、增强安全性和提供更大存储容量的优势。默认情况下，NiceGUI 在 app.storage.browser['id'] 中保存了浏览器会话的唯一标识符。
+
+用户存储和浏览器存储只能在页面构建函数 [page • NiceGUI](https://nicegui.io/documentation/page) 内使用，因为它们访问 FastAPI 的底层 Request 对象。此外，这两种类型需要`ui.run()`中的 storage_secret 参数来加密浏览器会话 cookie。
+
+```python
+from nicegui import app, ui
+
+@ui.page('/')
+def index():
+    app.storage.user['count'] = app.storage.user.get('count', 0) + 1
+    with ui.row():
+       ui.label('your own page visits:')
+       ui.label().bind_text_from(app.storage.user, 'count')
+
+ui.run(storage_secret='private key to secure the browser session cookie')
+```
+
+![image-20231017153824304](images/storage.jpg)
+
+#### 7、参数注入 
+
+由于 FastAPI 的支持，页面函数接受可选参数，以提供路径参数、查询参数或整个传入请求，以便访问请求体负载、标头、cookie 等等。
+
+```python
+from nicegui import ui
+
+@ui.page('/icon/{icon}')
+def icons(icon: str, amount: int = 1):
+    ui.label(icon).classes('text-h3')
+    with ui.row():
+        [ui.icon(icon).classes('text-h3') for _ in range(amount)]
+ui.link('Star', '/icon/star?amount=5')
+ui.link('Home', '/icon/home')
+ui.link('Water', '/icon/water_drop?amount=3')
+
+ui.run()
+```
+
+![image-20231017165446515](images/inject.jpg)
+
+#### 8、运行 JavaScript 
+
+此函数在浏览器中执行任意 JavaScript 代码的页面上运行。异步函数将在命令执行后返回。在调用此函数之前，客户端必须连接。要通过 ID 访问客户端对象，请使用 JavaScript 函数 getElement()。
+
+```python
+from nicegui import ui
+
+async def alert():
+    await ui.run_javascript('alert("Hello!")', respond=False)
+
+async def get_date():
+    time = await ui.run_javascript('Date()')
+    ui.notify(f'Browser time: {time}')
+
+async def access_elements():
+    await ui.run_javascript(f'getElement({label.id}).innerText += " Hello!"')
+
+ui.button('fire and forget', on_click=alert)
+ui.button('receive result', on_click=get_date)
+ui.button('access elements', on_click=access_elements)
+label = ui.label()
+
+ui.run()
+```
+
+![image-20231017170302252](images/runjs.jpg)
